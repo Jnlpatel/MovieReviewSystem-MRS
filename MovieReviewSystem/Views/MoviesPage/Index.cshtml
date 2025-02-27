@@ -1,0 +1,30 @@
+﻿@model IEnumerable<MovieReviewSystem.Models.MovieDto>
+
+@{
+    ViewData["Title"] = "Movies";
+}
+
+<h1>Movies</h1>
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">Create New</a>
+</p>
+<div class="row">
+    @foreach (var item in Model)
+    {
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">@item.Title</h5>
+                    <p class="card-text">Director: @item.Director</p>
+                    <p class="card-text">Release Date: @item.ReleaseDate.ToShortDateString()</p>
+                    <p class="card-text">Average Rating: @item.AverageRating.ToString("F1")</p>
+                    <a asp-action="Details" asp-route-id="@item.MovieID" class="btn btn-info">Details</a>
+                    <a asp-action="Edit" asp-route-id="@item.MovieID" class="btn btn-warning">Edit</a>
+                    <a asp-action="Delete" asp-route-id="@item.MovieID" class="btn btn-danger">Delete</a>
+                    <a asp-action="Reviews" asp-route-id="@item.MovieID" class="btn btn-primary">Add Review</a>
+                </div>
+            </div>
+        </div>
+    }
+</div>

@@ -30,8 +30,7 @@ namespace MovieReviewSystem.Controllers
                 {
                     ReviewID = r.ReviewID,
                     MovieID = r.MovieID,
-                    MovieTitle = r.Movie.Title,
-                    UserName = r.User.Name,
+                    UserID = r.UserID,
                     Rating = r.Rating,
                     ReviewText = r.ReviewText,
                     ReviewDate = r.ReviewDate
@@ -53,8 +52,7 @@ namespace MovieReviewSystem.Controllers
                 {
                     ReviewID = r.ReviewID,
                     MovieID = r.MovieID,
-                    MovieTitle = r.Movie.Title,
-                    UserName = r.User.Name,
+                    UserID = r.UserID,
                     Rating = r.Rating,
                     ReviewText = r.ReviewText,
                     ReviewDate = r.ReviewDate
@@ -79,8 +77,7 @@ namespace MovieReviewSystem.Controllers
                 {
                     ReviewID = r.ReviewID,
                     MovieID = r.MovieID,
-                    MovieTitle = r.Movie.Title,
-                    UserName = r.User.Name,
+                    UserID = r.UserID,
                     Rating = r.Rating,
                     ReviewText = r.ReviewText,
                     ReviewDate = r.ReviewDate
@@ -102,8 +99,7 @@ namespace MovieReviewSystem.Controllers
                 {
                     ReviewID = r.ReviewID,
                     MovieID = r.MovieID,
-                    MovieTitle = r.Movie.Title,
-                    UserName = r.User.Name,
+                    UserID = r.UserID,
                     Rating = r.Rating,
                     ReviewText = r.ReviewText,
                     ReviewDate = r.ReviewDate
@@ -118,7 +114,7 @@ namespace MovieReviewSystem.Controllers
         public async Task<ActionResult<ReviewDto>> CreateReview(ReviewDto reviewDto)
         {
             var movie = await _context.Movies.FindAsync(reviewDto.MovieID);
-            var user = await _context.Users.FirstOrDefaultAsync(u => u.Name == reviewDto.UserName);
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.UserID == reviewDto.UserID);
 
             if (movie == null)
                 return NotFound("Movie not found");
@@ -137,6 +133,10 @@ namespace MovieReviewSystem.Controllers
 
             _context.Reviews.Add(review);
             await _context.SaveChangesAsync();
+
+            // Populate ReviewID in the ReviewDto
+            reviewDto.ReviewID = review.ReviewID;
+            // Removed: reviewDto.MovieTitle = movie.Title;
 
             return CreatedAtAction(nameof(GetReview), new { id = review.ReviewID }, reviewDto);
         }

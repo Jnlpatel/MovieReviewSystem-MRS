@@ -6,7 +6,7 @@
         public string Name { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
-        public ICollection<Review> Reviews { get; set; }
+        public ICollection<Review>? Reviews { get; set; }
     }
 
     // DTO for API responses
@@ -15,5 +15,12 @@
         public int UserID { get; set; }
         public string Name { get; set; }
         public string Email { get; set; }
+    }
+
+    public class CreateUserDto
+    {
+        public string Name { get; set; }
+        public string Email { get; set; }
+        public string Password { get; set; } // Only needed when creating a user
     }
 }
