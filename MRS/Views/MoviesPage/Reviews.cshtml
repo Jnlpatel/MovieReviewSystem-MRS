@@ -1,0 +1,42 @@
+﻿@model IEnumerable<MRS.Models.ReviewDto>
+
+@{
+    ViewData["Title"] = "Reviews for " + ViewBag.MovieTitle;
+}
+
+<h1>Reviews for @ViewBag.MovieTitle</h1>
+
+<p>
+    <a asp-action="AddReview" asp-route-id="@ViewBag.MovieID" class="btn btn-primary">Add Review</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Rating</th>
+            <th>Review</th>
+            <th>Date</th>
+            <th>User ID</th>
+            <th>Actions</th> @* Added th for buttons *@
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Rating</td>
+                <td>@item.ReviewText</td>
+                <td>@item.ReviewDate.ToShortDateString()</td>
+                <td>@item.UserID</td>
+                <td>
+                    @* Added td with buttons*@
+                    <a asp-action="EditReview" asp-route-id="@item.ReviewID">Edit</a> |
+                    <a asp-action="DeleteReview" asp-route-id="@item.ReviewID">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<div>
+    <a asp-action="Details" asp-route-id="@ViewBag.MovieID">Back to Movie Details</a>
+</div>
